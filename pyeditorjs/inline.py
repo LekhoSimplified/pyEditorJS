@@ -25,7 +25,7 @@ class MyHTMLParser(HTMLParser):
     def handle_data(self, data):
         lines = data.split("<br>")
         self.mithril_js += "`" + "`,m('br'),`".join(lines) + "`,"
-        print("Encountered some data  :", data, self.mithril_js)
+        # print("Encountered some data  :", data, self.mithril_js)
 
 def mithril(data):
     parser = MyHTMLParser()

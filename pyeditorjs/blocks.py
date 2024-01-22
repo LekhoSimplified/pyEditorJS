@@ -29,7 +29,7 @@ __all__ = [
 
 
 def _sanitize(html: str) -> str:
-    return bleach.clean(html, tags=['b', 'i', 'u', 'a', 'mark', 'code'], attributes=['class', 'data-placeholder', 'href'])
+    return bleach.clean(html, tags=['b', 'i', 'u', 'a', 'mark', 'code'], attributes=['href'])
 
 
 @dataclass
@@ -120,7 +120,7 @@ class HeaderBlock(EditorJsBlock):
 
 
     def html(self, sanitize: bool=False) -> str:
-        return rf'<h{self.level} class="cdx-block ce-header">{_sanitize(self.text) if sanitize else self.text}</h{self.level}>'
+        return rf'<h{self.level}>{_sanitize(self.text) if sanitize else self.text}</h{self.level}>'
 
     def mithril(self, sanitize: bool=False) -> str:
         return f"m('h{self.level}',`{_sanitize(self.text) if sanitize else self.text}`)"
@@ -137,7 +137,7 @@ class ParagraphBlock(EditorJsBlock):
 
 
     def html(self, sanitize: bool=False) -> str:
-        return rf'<p class="cdx-block ce-paragraph">{_sanitize(self.text) if sanitize else self.text}</p>'
+        return rf'<p>{_sanitize(self.text) if sanitize else self.text}</p>'
 
     def mithril(self, sanitize: bool=False) -> str:
         return f"m('p',[{inline_mithril(_sanitize(self.text) if sanitize else self.text)}])"
@@ -174,7 +174,7 @@ class ListBlock(EditorJsBlock):
         _type = "ul" if self.style == "unordered" else "ol"
         _items_html = ''.join(_items)
 
-        return rf'<{_type} class="cdx-block cdx-list cdx-list--{self.style}">{_items_html}</{_type}>'
+        return rf'<{_type}>{_items_html}</{_type}>'
 
 
     def mithril(self, sanitize: bool=False) -> str:
